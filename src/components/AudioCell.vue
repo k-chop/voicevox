@@ -19,6 +19,7 @@
       filled
       dense
       hide-bottom-space
+      input-class="mousetrap"
       class="full-width"
       color="primary-light"
       :disable="uiLocked"

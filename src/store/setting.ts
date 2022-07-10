@@ -15,6 +15,35 @@ import { Dark, setCssVar, colors } from "quasar";
 import { createUILockAction } from "./ui";
 import { createPartialStore } from "./vuex";
 
+Mousetrap.prototype.stopCallback = (
+  event: Mousetrap.ExtendedKeyboardEvent,
+  element: HTMLElement,
+  combo: string
+) => {
+  const isInput =
+    element.tagName == "INPUT" ||
+    element.tagName == "SELECT" ||
+    element.tagName == "TEXTAREA" ||
+    element.isContentEditable;
+
+  const hasMouseTrapClass =
+    (" " + element.className + " ").indexOf(" mousetrap ") > -1;
+
+  const isSingleKey = !(event.ctrlKey || event.metaKey || event.altKey);
+
+  if (isInput && hasMouseTrapClass) {
+    // 1キーまたはshift+1キーのショートカットはinput内では実行しない
+    if (isSingleKey) {
+      return true;
+    }
+    // フォーカスを外して入力中の内容を確定させる（FIXME: 再生に間に合わない）
+    element.blur();
+    return false;
+  }
+
+  return isInput;
+};
+
 const hotkeyFunctionCache: Record<string, () => HotkeyReturnType> = {};
 
 export const settingStoreState: SettingStoreState = {
