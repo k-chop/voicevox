@@ -29,6 +29,7 @@
       @change="willRemove || pushAudioText()"
       @paste="pasteOnAudioCell"
       @focus="setActiveAudioKey()"
+      @blur="endEdit"
       @keydown.prevent.up.exact="moveUpCell"
       @keydown.prevent.down.exact="moveDownCell"
       @mouseup.right="onRightClickTextField"
@@ -146,16 +147,28 @@ export default defineComponent({
 
     const pushAudioText = async () => {
       if (isChangeFlag.value) {
-        isChangeFlag.value = false;
-        await store.dispatch("COMMAND_CHANGE_AUDIO_TEXT", {
-          audioKey: props.audioKey,
-          text: audioTextBuffer.value,
-        });
+        try {
+          await store.dispatch("COMMAND_CHANGE_AUDIO_TEXT", {
+            audioKey: props.audioKey,
+            text: audioTextBuffer.value,
+          });
+          await store.dispatch("END_EDIT", { audioKey: props.audioKey });
+        } finally {
+          isChangeFlag.value = false;
+        }
       }
     };
 
     const setActiveAudioKey = () => {
       store.dispatch("SET_ACTIVE_AUDIO_KEY", { audioKey: props.audioKey });
+      store.dispatch("START_EDIT", { audioKey: props.audioKey });
+    };
+
+    const endEdit = () => {
+      // 内容が変化していない場合はこちらでEND_EDITを呼ぶ。changeイベントが呼ばれないため
+      if (!isChangeFlag.value) {
+        store.dispatch("END_EDIT", { audioKey: props.audioKey });
+      }
     };
     const save = () => {
       store.dispatch("GENERATE_AND_SAVE_AUDIO", { audioKey: props.audioKey });
@@ -314,6 +327,7 @@ export default defineComponent({
       setAudioTextBuffer,
       pushAudioText,
       setActiveAudioKey,
+      endEdit,
       save,
       play,
       stop,

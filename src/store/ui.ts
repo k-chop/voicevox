@@ -53,6 +53,8 @@ export const uiStoreState: UiStoreState = {
   isPinned: false,
   isFullscreen: false,
   progress: -1,
+  editingAudioKeys: [],
+  hotkeyQueue: [],
 };
 
 export const uiStore = createPartialStore<UiStoreTypes>({
@@ -364,6 +366,42 @@ export const uiStore = createPartialStore<UiStoreTypes>({
     action({ dispatch }) {
       // -1で非表示
       dispatch("SET_PROGRESS", { progress: -1 });
+    },
+  },
+
+  START_EDIT: {
+    mutation(state, { audioKey }) {
+      state.editingAudioKeys = [...state.editingAudioKeys, audioKey];
+    },
+    action({ commit }, { audioKey }) {
+      commit("START_EDIT", { audioKey });
+    },
+  },
+
+  END_EDIT: {
+    mutation(state, { audioKey }) {
+      state.editingAudioKeys = state.editingAudioKeys.filter(
+        (key) => key !== audioKey
+      );
+    },
+    action({ state, commit }, { audioKey }) {
+      commit("END_EDIT", { audioKey });
+      if (state.hotkeyQueue.length > 0) {
+        state.hotkeyQueue.forEach((f) => f());
+        commit("CLEAR_HOTKEY_QUEUE");
+      }
+    },
+  },
+
+  ENQUEUE_HOTKEY: {
+    mutation(state, { f }) {
+      state.hotkeyQueue = [...state.hotkeyQueue, f];
+    },
+  },
+
+  CLEAR_HOTKEY_QUEUE: {
+    mutation(state) {
+      state.hotkeyQueue = [];
     },
   },
 });

@@ -17,8 +17,7 @@ import { createPartialStore } from "./vuex";
 
 Mousetrap.prototype.stopCallback = (
   event: Mousetrap.ExtendedKeyboardEvent,
-  element: HTMLElement,
-  combo: string
+  element: HTMLElement
 ) => {
   const isInput =
     element.tagName == "INPUT" ||
@@ -169,7 +168,7 @@ export const settingStore = createPartialStore<SettingStoreTypes>({
       });
       if (flag) state.hotkeySettings.push(newHotkey);
     },
-    action({ state, commit }, { data }: { data: HotkeySetting }) {
+    action({ state, commit, dispatch }, { data }: { data: HotkeySetting }) {
       window.electron.hotkeySettings(data);
       const oldHotkey = state.hotkeySettings.find((value) => {
         return value.action == data.action;
@@ -183,10 +182,9 @@ export const settingStore = createPartialStore<SettingStoreTypes>({
         data.combination != "" &&
         hotkeyFunctionCache[data.action] !== undefined
       ) {
-        Mousetrap.bind(
-          hotkey2Combo(data.combination),
-          hotkeyFunctionCache[data.action]
-        );
+        Mousetrap.bind(hotkey2Combo(data.combination), () => {
+          dispatch("EXECUTE_HOTKEY", { f: hotkeyFunctionCache[data.action] });
+        });
       }
       commit("SET_HOTKEY_SETTINGS", {
         newHotkey: data,
@@ -203,6 +201,16 @@ export const settingStore = createPartialStore<SettingStoreTypes>({
       newData.then((toolbarSetting) => {
         commit("SET_TOOLBAR_SETTING", { toolbarSetting });
       });
+    },
+  },
+
+  EXECUTE_HOTKEY: {
+    action({ state, commit }, { f }) {
+      if (state.editingAudioKeys.length > 0) {
+        commit("ENQUEUE_HOTKEY", { f });
+      } else {
+        f();
+      }
     },
   },
 

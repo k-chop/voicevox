@@ -35,6 +35,7 @@ import {
   SplitterPosition,
   ConfirmedTips,
   EngineDirValidationResult,
+  HotkeyReturnType,
 } from "@/type/preload";
 import { IEngineConnectorFactory } from "@/infrastructures/EngineConnector";
 import { QVueGlobals } from "quasar";
@@ -960,6 +961,22 @@ export type SettingStoreTypes = {
   CHANGE_USE_GPU: {
     action(payload: { useGpu: boolean }): void;
   };
+
+  EXECUTE_HOTKEY: {
+    action(payload: { f: () => HotkeyReturnType }): void;
+  };
+
+  VALIDATE_ENGINE_DIR: {
+    action(payload: { engineDir: string }): Promise<EngineDirValidationResult>;
+  };
+
+  ADD_ENGINE_DIR: {
+    action(payload: { engineDir: string }): Promise<void>;
+  };
+
+  REMOVE_ENGINE_DIR: {
+    action(payload: { engineDir: string }): Promise<void>;
+  };
 };
 
 /*
@@ -986,6 +1003,8 @@ export type UiStoreState = {
   isPinned: boolean;
   isFullscreen: boolean;
   progress: number;
+  editingAudioKeys: string[];
+  hotkeyQueue: (() => HotkeyReturnType)[];
 };
 
 export type UiStoreTypes = {
@@ -1115,6 +1134,24 @@ export type UiStoreTypes = {
 
   CHECK_EDITED_AND_NOT_SAVE: {
     action(): Promise<void>;
+  };
+
+  START_EDIT: {
+    mutation: { audioKey: string };
+    action(payload: { audioKey: string }): void;
+  };
+
+  END_EDIT: {
+    mutation: { audioKey: string };
+    action(payload: { audioKey: string }): void;
+  };
+
+  ENQUEUE_HOTKEY: {
+    mutation: { f: () => HotkeyReturnType };
+  };
+
+  CLEAR_HOTKEY_QUEUE: {
+    mutation: undefined;
   };
 
   RESTART_APP: {
