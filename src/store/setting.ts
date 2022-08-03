@@ -35,8 +35,6 @@ Mousetrap.prototype.stopCallback = (
     if (isSingleKey) {
       return true;
     }
-    // フォーカスを外して入力中の内容を確定させる（FIXME: 再生に間に合わない）
-    element.blur();
     return false;
   }
 
@@ -183,6 +181,9 @@ export const settingStore = createPartialStore<SettingStoreTypes>({
         hotkeyFunctionCache[data.action] !== undefined
       ) {
         Mousetrap.bind(hotkey2Combo(data.combination), () => {
+          if (document.activeElement instanceof HTMLInputElement) {
+            document.activeElement.blur();
+          }
           dispatch("EXECUTE_HOTKEY", { f: hotkeyFunctionCache[data.action] });
         });
       }

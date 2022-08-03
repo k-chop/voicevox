@@ -266,6 +266,7 @@ export default defineComponent({
           emit("focusCell", { audioKey: audioKeys.value[index + 1] });
         }
 
+        store.dispatch("END_EDIT", { audioKey: props.audioKey });
         store.dispatch("COMMAND_REMOVE_AUDIO_ITEM", {
           audioKey: props.audioKey,
         });
