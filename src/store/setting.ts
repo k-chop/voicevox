@@ -181,6 +181,7 @@ export const settingStore = createPartialStore<SettingStoreTypes>({
         hotkeyFunctionCache[data.action] !== undefined
       ) {
         Mousetrap.bind(hotkey2Combo(data.combination), () => {
+          // AudioCellに入力中のテキストを確定してから実行するためにblurする
           if (document.activeElement instanceof HTMLInputElement) {
             document.activeElement.blur();
           }
@@ -207,6 +208,7 @@ export const settingStore = createPartialStore<SettingStoreTypes>({
 
   EXECUTE_HOTKEY: {
     action({ state, commit }, { f }) {
+      // 入力中なら実行せずキューに入れる
       if (state.editingAudioKeys.length > 0) {
         commit("ENQUEUE_HOTKEY", { f });
       } else {
