@@ -159,17 +159,18 @@ export default defineComponent({
       }
     };
 
-    const setActiveAudioKey = () => {
-      store.dispatch("SET_ACTIVE_AUDIO_KEY", { audioKey: props.audioKey });
-      store.dispatch("START_EDIT", { audioKey: props.audioKey });
-    };
-
     const endEdit = () => {
       // 内容が変化していない場合はこちらでEND_EDITを呼ぶ。changeイベントが呼ばれないため
       if (!isChangeFlag.value) {
         store.dispatch("END_EDIT", { audioKey: props.audioKey });
       }
     };
+
+    const setActiveAudioKey = () => {
+      store.dispatch("SET_ACTIVE_AUDIO_KEY", { audioKey: props.audioKey });
+      store.dispatch("START_EDIT", { audioKey: props.audioKey });
+    };
+
     const save = () => {
       store.dispatch("GENERATE_AND_SAVE_AUDIO", { audioKey: props.audioKey });
     };
