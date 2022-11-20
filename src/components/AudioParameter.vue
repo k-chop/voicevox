@@ -8,7 +8,7 @@
       color="primary-light"
       text-color="display-on-primary"
       v-if="
-        !directInputMode &&
+        !isDirectInputMode &&
         !disable &&
         (valueLabel.visible || previewSlider.state.isPanning.value)
       "
@@ -19,7 +19,7 @@
       class="value-label editable"
       color="primary-light"
       text-color="display-on-primary"
-      v-if="directInputMode"
+      v-if="isDirectInputMode"
       @click.stop="
         undefined; // クリックでアクセント句が選択されないように
       "
@@ -80,7 +80,7 @@ export default defineComponent({
     type: { type: String as () => MoraDataType, default: "vowel" },
     clip: { type: Boolean, default: false },
     shiftKeyFlag: { type: Boolean, default: false },
-    directInputMode: { type: Boolean, default: false },
+    isDirectInputMode: { type: Boolean, default: false },
   },
 
   emits: ["changeValue", "mouseOver"],

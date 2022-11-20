@@ -301,6 +301,10 @@ const defaultHotkeySettings: HotkeySetting[] = [
     action: "選択中のアクセント句のイントネーションをリセット",
     combination: "R",
   },
+  {
+    action: "直接入力モード切替",
+    combination: "/",
+  },
 ];
 
 const defaultToolbarButtonSetting: ToolbarSetting = [

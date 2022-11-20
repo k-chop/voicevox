@@ -96,7 +96,7 @@
                 :type="'pitch'"
                 :clip="false"
                 :shiftKeyFlag="shiftKeyFlag"
-                :directInputMode="true"
+                :isDirectInputMode="isDirectInputMode"
                 @changeValue="changeMoraData"
               />
             </div>
@@ -355,9 +355,19 @@ export default defineComponent({
           }
         },
       ],
+      [
+        "直接入力モード切替",
+        () => {
+          if (!uiLocked.value) {
+            isDirectInputMode.value = !isDirectInputMode.value;
+          }
+        },
+      ],
     ]);
     // このコンポーネントは遅延評価なので手動でバインディングを行う
     setHotkeyFunctions(hotkeyMap, true);
+
+    const isDirectInputMode = ref<boolean>(false);
 
     // detail selector
     type DetailTypes = "accent" | "pitch" | "length" | "play" | "stop" | "save";
@@ -832,6 +842,7 @@ export default defineComponent({
       shiftKeyFlag,
       handleChangeVoicing,
       audioDetail,
+      isDirectInputMode,
     };
   },
 });
