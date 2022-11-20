@@ -37,7 +37,7 @@
       >
         <q-input
           center
-          v-model.number="scope.value"
+          v-model="scope.value"
           dense
           autofocus
           outlined
