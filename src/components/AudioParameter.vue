@@ -20,7 +20,9 @@
       color="primary-light"
       text-color="display-on-primary"
       v-if="directInputMode"
-      @click.stop
+      @click.stop="
+        undefined; // クリックでアクセント句が選択されないように
+      "
     >
       {{ previewSlider.state.currentValue.value?.toFixed(precisionComputed) }}
       <popup-number-edit
