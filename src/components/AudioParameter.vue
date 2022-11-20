@@ -23,7 +23,6 @@
     >
       {{ previewSlider.state.currentValue.value?.toFixed(precisionComputed) }}
       <q-popup-edit
-        style="padding: 0; margin-top: 100px"
         class="number-edit"
         :model-value="
           previewSlider.state.currentValue.value?.toFixed(precisionComputed)
