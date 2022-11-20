@@ -164,165 +164,36 @@
       <q-separator class="q-mt-md" />
     </div>
 
-    <div class="q-mx-md">
-      <span
-        class="text-body1 q-mb-xs"
-        :class="{
-          disabled: speedScaleSlider.qSliderProps.disable.value,
-        }"
-        >話速 {{ speedScaleSlider.state.currentValue.value?.toFixed(2) }}</span
-      >
-      <q-slider
-        dense
-        snap
-        color="primary-light"
-        trackSize="2px"
-        :min="speedScaleSlider.qSliderProps.min.value"
-        :max="speedScaleSlider.qSliderProps.max.value"
-        :step="speedScaleSlider.qSliderProps.step.value"
-        :disable="speedScaleSlider.qSliderProps.disable.value"
-        :model-value="speedScaleSlider.qSliderProps.modelValue.value"
-        @update:model-value="
-          speedScaleSlider.qSliderProps['onUpdate:modelValue']
-        "
-        @change="speedScaleSlider.qSliderProps.onChange"
-        @wheel="speedScaleSlider.qSliderProps.onWheel"
-        @pan="speedScaleSlider.qSliderProps.onPan"
-      />
-    </div>
-    <div class="q-px-md">
-      <span
-        class="text-body1 q-mb-xs"
-        :class="{
-          disabled: pitchScaleSlider.qSliderProps.disable.value,
-        }"
-        >音高 {{ pitchScaleSlider.state.currentValue.value?.toFixed(2) }}</span
-      >
-      <q-slider
-        dense
-        snap
-        color="primary-light"
-        trackSize="2px"
-        :min="pitchScaleSlider.qSliderProps.min.value"
-        :max="pitchScaleSlider.qSliderProps.max.value"
-        :step="pitchScaleSlider.qSliderProps.step.value"
-        :disable="pitchScaleSlider.qSliderProps.disable.value"
-        :model-value="pitchScaleSlider.qSliderProps.modelValue.value"
-        @update:model-value="
-          pitchScaleSlider.qSliderProps['onUpdate:modelValue']
-        "
-        @change="pitchScaleSlider.qSliderProps.onChange"
-        @wheel="pitchScaleSlider.qSliderProps.onWheel"
-        @pan="pitchScaleSlider.qSliderProps.onPan"
-      />
-    </div>
-    <div class="q-px-md">
-      <span
-        class="text-body1 q-mb-xs"
-        :class="{
-          disabled: intonationScaleSlider.qSliderProps.disable.value,
-        }"
-        >抑揚
-        {{ intonationScaleSlider.state.currentValue.value?.toFixed(2) }}</span
-      >
-      <q-slider
-        dense
-        snap
-        color="primary-light"
-        trackSize="2px"
-        :min="intonationScaleSlider.qSliderProps.min.value"
-        :max="intonationScaleSlider.qSliderProps.max.value"
-        :step="intonationScaleSlider.qSliderProps.step.value"
-        :disable="intonationScaleSlider.qSliderProps.disable.value"
-        :model-value="intonationScaleSlider.qSliderProps.modelValue.value"
-        @update:model-value="
-          intonationScaleSlider.qSliderProps['onUpdate:modelValue']
-        "
-        @change="intonationScaleSlider.qSliderProps.onChange"
-        @wheel="intonationScaleSlider.qSliderProps.onWheel"
-        @pan="intonationScaleSlider.qSliderProps.onPan"
-      />
-    </div>
-    <div class="q-px-md">
-      <span
-        class="text-body1 q-mb-xs"
-        :class="{
-          disabled: volumeScaleSlider.qSliderProps.disable.value,
-        }"
-        >音量 {{ volumeScaleSlider.state.currentValue.value?.toFixed(2) }}</span
-      >
-      <q-slider
-        dense
-        snap
-        color="primary-light"
-        trackSize="2px"
-        :min="volumeScaleSlider.qSliderProps.min.value"
-        :max="volumeScaleSlider.qSliderProps.max.value"
-        :step="volumeScaleSlider.qSliderProps.step.value"
-        :disable="volumeScaleSlider.qSliderProps.disable.value"
-        :model-value="volumeScaleSlider.qSliderProps.modelValue.value"
-        @update:model-value="
-          volumeScaleSlider.qSliderProps['onUpdate:modelValue']
-        "
-        @change="volumeScaleSlider.qSliderProps.onChange"
-        @wheel="volumeScaleSlider.qSliderProps.onWheel"
-        @pan="volumeScaleSlider.qSliderProps.onPan"
-      />
-    </div>
-    <div class="q-px-md">
-      <span
-        class="text-body1 q-mb-xs"
-        :class="{
-          disabled: prePhonemeLengthSlider.qSliderProps.disable.value,
-        }"
-        >開始無音
-        {{ prePhonemeLengthSlider.state.currentValue.value?.toFixed(2) }}</span
-      >
-      <q-slider
-        dense
-        snap
-        color="primary-light"
-        trackSize="2px"
-        :min="prePhonemeLengthSlider.qSliderProps.min.value"
-        :max="prePhonemeLengthSlider.qSliderProps.max.value"
-        :step="prePhonemeLengthSlider.qSliderProps.step.value"
-        :disable="prePhonemeLengthSlider.qSliderProps.disable.value"
-        :model-value="prePhonemeLengthSlider.qSliderProps.modelValue.value"
-        @update:model-value="
-          prePhonemeLengthSlider.qSliderProps['onUpdate:modelValue']
-        "
-        @change="prePhonemeLengthSlider.qSliderProps.onChange"
-        @wheel="prePhonemeLengthSlider.qSliderProps.onWheel"
-        @pan="prePhonemeLengthSlider.qSliderProps.onPan"
-      />
-    </div>
-    <div class="q-px-md">
-      <span
-        class="text-body1 q-mb-xs"
-        :class="{
-          disabled: postPhonemeLengthSlider.qSliderProps.disable.value,
-        }"
-        >終了無音
-        {{ postPhonemeLengthSlider.state.currentValue.value?.toFixed(2) }}</span
-      >
-      <q-slider
-        dense
-        snap
-        color="primary-light"
-        trackSize="2px"
-        :min="postPhonemeLengthSlider.qSliderProps.min.value"
-        :max="postPhonemeLengthSlider.qSliderProps.max.value"
-        :step="postPhonemeLengthSlider.qSliderProps.step.value"
-        :disable="postPhonemeLengthSlider.qSliderProps.disable.value"
-        :model-value="postPhonemeLengthSlider.qSliderProps.modelValue.value"
-        @update:model-value="
-          postPhonemeLengthSlider.qSliderProps['onUpdate:modelValue']
-        "
-        @change="postPhonemeLengthSlider.qSliderProps.onChange"
-        @wheel="postPhonemeLengthSlider.qSliderProps.onWheel"
-        @pan="postPhonemeLengthSlider.qSliderProps.onPan"
-      />
-    </div>
+    <audio-info-parameter
+      label="話速"
+      :slider="speedScaleSlider"
+      :onChange="setAudioSpeedScale"
+    />
+    <audio-info-parameter
+      label="音高"
+      :slider="pitchScaleSlider"
+      :onChange="setAudioPitchScale"
+    />
+    <audio-info-parameter
+      label="抑揚"
+      :slider="intonationScaleSlider"
+      :onChange="setAudioIntonationScale"
+    />
+    <audio-info-parameter
+      label="音量"
+      :slider="volumeScaleSlider"
+      :onChange="setAudioVolumeScale"
+    />
+    <audio-info-parameter
+      label="開始無音"
+      :slider="prePhonemeLengthSlider"
+      :onChange="setAudioPrePhonemeLength"
+    />
+    <audio-info-parameter
+      label="終了無音"
+      :slider="postPhonemeLengthSlider"
+      :onChange="setAudioPostPhonemeLength"
+    />
   </div>
 </template>
 
@@ -334,6 +205,7 @@ import { useStore } from "@/store";
 import { Preset } from "@/type/preload";
 import { previewSliderHelper } from "@/helpers/previewSliderHelper";
 import PresetManageDialog from "./PresetManageDialog.vue";
+import AudioInfoParameter from "./AudioInfoParameter.vue";
 import { EngineManifest } from "@/openapi";
 
 export default defineComponent({
@@ -341,6 +213,7 @@ export default defineComponent({
 
   components: {
     PresetManageDialog,
+    AudioInfoParameter,
   },
 
   props: {

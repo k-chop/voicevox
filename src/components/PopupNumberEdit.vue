@@ -8,7 +8,7 @@
     transition-hide="none"
     v-slot="scope"
     max-width="48px"
-    cover
+    fit
   >
     <q-input
       center
@@ -54,7 +54,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.popup-number-edit {
+.q-popup-edit.popup-number-edit {
   padding: 0;
 
   .q-field__control {
