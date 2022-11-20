@@ -22,31 +22,14 @@
       v-if="directInputMode"
     >
       {{ previewSlider.state.currentValue.value?.toFixed(precisionComputed) }}
-      <q-popup-edit
-        class="number-edit"
-        :model-value="
-          previewSlider.state.currentValue.value?.toFixed(precisionComputed)
+      <popup-number-edit
+        :value="
+          previewSlider.state.currentValue.value
+            ? previewSlider.state.currentValue.value.toFixed(precisionComputed)
+            : ''
         "
-        @update:model-value="changeValueFromTextInput"
-        auto-save
-        transition-show="none"
-        transition-hide="none"
-        v-slot="scope"
-        max-width="48px"
-        cover
-      >
-        <q-input
-          center
-          v-model="scope.value"
-          dense
-          autofocus
-          outlined
-          input-class="text-center"
-          input-style="padding: 0"
-          @keyup.enter="scope.set"
-          @focus="(input) => input.target.select()"
-        />
-      </q-popup-edit>
+        @update="changeValueFromTextInput"
+      />
     </q-badge>
     <q-slider
       vertical
@@ -75,8 +58,11 @@
 import { previewSliderHelper } from "@/helpers/previewSliderHelper";
 import { MoraDataType } from "@/type/preload";
 import { computed, defineComponent, reactive } from "vue";
+import PopupNumberEdit from "./PopupNumberEdit.vue";
 
 export default defineComponent({
+  components: { PopupNumberEdit },
+
   name: "AudioParameter",
 
   props: {
@@ -203,14 +189,6 @@ div {
     &.clickable {
       cursor: text;
     }
-  }
-}
-
-:deep(.number-edit) {
-  padding: 0;
-
-  .q-field__control {
-    padding: 0;
   }
 }
 </style>
