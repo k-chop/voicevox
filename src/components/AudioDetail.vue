@@ -96,6 +96,7 @@
                 :type="'pitch'"
                 :clip="false"
                 :shiftKeyFlag="shiftKeyFlag"
+                :directInputMode="true"
                 @changeValue="changeMoraData"
               />
             </div>

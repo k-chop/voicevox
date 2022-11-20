@@ -8,10 +8,46 @@
       color="primary-light"
       text-color="display-on-primary"
       v-if="
-        !disable && (valueLabel.visible || previewSlider.state.isPanning.value)
+        !directInputMode &&
+        !disable &&
+        (valueLabel.visible || previewSlider.state.isPanning.value)
       "
     >
       {{ previewSlider.state.currentValue.value?.toFixed(precisionComputed) }}
+    </q-badge>
+    <q-badge
+      class="value-label clickable"
+      color="primary-light"
+      text-color="display-on-primary"
+      v-if="directInputMode"
+    >
+      {{ previewSlider.state.currentValue.value?.toFixed(precisionComputed) }}
+      <q-popup-edit
+        style="padding: 0; margin-top: 100px"
+        class="number-edit"
+        :model-value="
+          previewSlider.state.currentValue.value?.toFixed(precisionComputed)
+        "
+        @update:model-value="changeValueFromTextInput"
+        auto-save
+        transition-show="none"
+        transition-hide="none"
+        v-slot="scope"
+        max-width="48px"
+        cover
+      >
+        <q-input
+          center
+          v-model.number="scope.value"
+          dense
+          autofocus
+          outlined
+          input-class="text-center"
+          input-style="padding: 0"
+          @keyup.enter="scope.set"
+          @focus="(input) => input.target.select()"
+        />
+      </q-popup-edit>
     </q-badge>
     <q-slider
       vertical
@@ -56,6 +92,7 @@ export default defineComponent({
     type: { type: String as () => MoraDataType, default: "vowel" },
     clip: { type: Boolean, default: false },
     shiftKeyFlag: { type: Boolean, default: false },
+    directInputMode: { type: Boolean, default: false },
   },
 
   emits: ["changeValue", "mouseOver"],
@@ -69,6 +106,15 @@ export default defineComponent({
         newValue,
         type
       );
+    };
+
+    const changeValueFromTextInput = (newValue: string) => {
+      const newNumber = parseFloat(newValue);
+      if (Number.isNaN(newNumber)) {
+        return;
+      }
+      const clamped = Math.min(Math.max(newNumber, props.min), props.max);
+      changeValue(clamped);
     };
 
     const previewSlider = previewSliderHelper({
@@ -123,6 +169,7 @@ export default defineComponent({
     return {
       previewSlider,
       changeValue,
+      changeValueFromTextInput,
       valueLabel,
       clipPathComputed,
       handleMouseHover,
@@ -152,6 +199,19 @@ div {
     height: $value-label-height;
     padding: 0px 8px;
     transform: translateX(-50%) translateX(15px);
+    z-index: 3;
+
+    &.clickable {
+      cursor: text;
+    }
+  }
+}
+
+:deep(.number-edit) {
+  padding: 0;
+
+  .q-field__control {
+    padding: 0;
   }
 }
 </style>
