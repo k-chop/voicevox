@@ -16,7 +16,7 @@
       {{ previewSlider.state.currentValue.value?.toFixed(precisionComputed) }}
     </q-badge>
     <q-badge
-      class="value-label clickable"
+      class="value-label editable"
       color="primary-light"
       text-color="display-on-primary"
       v-if="directInputMode"
@@ -187,7 +187,7 @@ div {
     transform: translateX(-50%) translateX(15px);
     z-index: 3;
 
-    &.clickable {
+    &.editable {
       cursor: text;
     }
   }

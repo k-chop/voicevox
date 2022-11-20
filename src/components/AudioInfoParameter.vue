@@ -8,7 +8,7 @@
         }"
       >
         {{ label }}
-        <span>
+        <span class="editable">
           {{ slider.state.currentValue.value?.toFixed(2) }}
           <popup-number-edit
             :value="
@@ -76,3 +76,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped lang="scss">
+.editable {
+  cursor: text;
+}
+</style>
