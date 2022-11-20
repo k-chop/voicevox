@@ -20,6 +20,7 @@
       color="primary-light"
       text-color="display-on-primary"
       v-if="directInputMode"
+      @click.stop
     >
       {{ previewSlider.state.currentValue.value?.toFixed(precisionComputed) }}
       <popup-number-edit
