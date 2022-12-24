@@ -15,6 +15,12 @@ import { Dark, setCssVar, colors } from "quasar";
 import { createUILockAction } from "./ui";
 import { createPartialStore } from "./vuex";
 
+// 返り値がtrueなら実行を止める、というMousetrapの関数
+// 参照: https://craig.is/killing/mice#api.stopCallback
+//
+// 1. input内でもショートカットキーを実行する
+// 2. ただし1文字のショートカットは実行しない
+// これらを実現するため上書きしている
 Mousetrap.prototype.stopCallback = (
   event: Mousetrap.ExtendedKeyboardEvent,
   element: HTMLElement
@@ -31,11 +37,8 @@ Mousetrap.prototype.stopCallback = (
   const isSingleKey = !(event.ctrlKey || event.metaKey || event.altKey);
 
   if (isInput && hasMouseTrapClass) {
-    // 1キーまたはshift+1キーのショートカットはinput内では実行しない
-    if (isSingleKey) {
-      return true;
-    }
-    return false;
+    // 1文字またはshift+1文字のショートカットはinput内では実行しない
+    return isSingleKey;
   }
 
   return isInput;
