@@ -965,18 +965,6 @@ export type SettingStoreTypes = {
   EXECUTE_HOTKEY: {
     action(payload: { f: () => HotkeyReturnType }): void;
   };
-
-  VALIDATE_ENGINE_DIR: {
-    action(payload: { engineDir: string }): Promise<EngineDirValidationResult>;
-  };
-
-  ADD_ENGINE_DIR: {
-    action(payload: { engineDir: string }): Promise<void>;
-  };
-
-  REMOVE_ENGINE_DIR: {
-    action(payload: { engineDir: string }): Promise<void>;
-  };
 };
 
 /*
